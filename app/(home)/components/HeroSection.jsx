@@ -62,7 +62,7 @@ const HeroSection = () => {
             className="inline-flex items-center space-x-2 bg-secondary/10 border-[1.8px] border-zinc-900/70 px-4 py-2 rounded-full text-primary backdrop-blur-sm"
           >
             <HiCode className="w-5 h-5" />
-            <span className="text-sm font-medium">Welcome to my portfolio</span>
+            <span className="text-sm font-medium">Welcome to our portfolio</span>
           </motion.div>
 
           <div className="space-y-4">
@@ -74,7 +74,7 @@ const HeroSection = () => {
                 variants={textAnimation}
                 className="block text-primary mb-2"
               >
-                Hi, I'm {config.developer.name}
+                Hi, We're {config.developer.name} Team
               </motion.span>
               <motion.span
                 variants={textAnimation}

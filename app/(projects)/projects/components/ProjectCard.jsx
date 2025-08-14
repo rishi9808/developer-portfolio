@@ -36,7 +36,7 @@ export const ProjectCard = ({ project, index }) => (
                     {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5">
+                {/* <div className="flex flex-wrap gap-1.5">
                     {project.technologies.map((tech, idx) => (
                         <span
                             key={idx}
@@ -45,7 +45,7 @@ export const ProjectCard = ({ project, index }) => (
                             {tech}
                         </span>
                     ))}
-                </div>
+                </div> */}
             </div>
 
             <div className="flex items-center gap-3 pt-4">

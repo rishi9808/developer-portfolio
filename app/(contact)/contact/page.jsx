@@ -10,7 +10,20 @@ import { config } from '@/config';
 const ContactPage = () => {
     const handleSubmit = async (formData) => {
         try {
-            console.log('Form submitted:', formData);
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Form submitted successfully:', data);
             toast.success("Thank you for your message. I'll get back to you soon.");
         } catch (error) {
             console.error('Error submitting form:', error);

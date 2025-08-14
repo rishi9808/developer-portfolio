@@ -27,7 +27,7 @@ const SectionTitle = () => (
                 </p>
             </div>
 
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
                 <Button
                     variant="expandIcon"
                     Icon={HiArrowRight}
@@ -44,7 +44,7 @@ const SectionTitle = () => (
                         View Github
                     </a>
                 </Button>
-            </div>
+            </div> */}
         </div>
 
         <div className="flex items-center gap-6 pt-2 overflow-x-auto pb-2 scrollbar-hide">

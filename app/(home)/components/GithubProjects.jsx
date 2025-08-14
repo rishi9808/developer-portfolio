@@ -41,21 +41,21 @@ const languageColors = {
 };
 
 const ITEMS_PER_PAGE = 6;
-const GITHUB_API_URL = `https://api.github.com/users/${config.social.github}/repos`;
+// const GITHUB_API_URL = `https://api.github.com/users/${config.social.github}/repos`;
 
-const fetcher = async (url) => {
-    const res = await fetch(url);
+// const fetcher = async (url) => {
+//     const res = await fetch(url);
 
-    if (!res.ok) {
-        const errorData = await res.json();
-        const error = new Error('Failed to fetch GitHub projects');
-        error.info = errorData.message;
-        error.status = res.status;
-        throw error;
-    }
+//     if (!res.ok) {
+//         const errorData = await res.json();
+//         const error = new Error('Failed to fetch GitHub projects');
+//         error.info = errorData.message;
+//         error.status = res.status;
+//         throw error;
+//     }
 
-    return res.json();
-};
+//     return res.json();
+// };
 
 const ProjectSkeleton = () => (
     <div className="rounded-xl bg-secondary/5 border border-secondary/10 p-6">
@@ -98,35 +98,65 @@ const ProjectCard = ({ project }) => {
     const topics = project.topics || [];
 
     return (
-        <motion.a
-            href={project.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
+        <motion.div
             variants={itemAnimation}
             className="group rounded-xl bg-secondary/5 border border-secondary/10 p-6 hover:bg-secondary/10 transition-all duration-300"
         >
             <div className="space-y-4">
-                <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-2">
-                        <FaGithub className="w-5 h-5 text-primary" />
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <h3 className="font-semibold text-primary truncate max-w-[150px]">
-                                        {project.name}
-                                    </h3>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>{project.name}</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
-                    <HiExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                {/* Project Image */}
+                <div className="w-full">
+                    <img
+                        src={project.image}
+                        alt={project.title || "Project image"}
+                        className="w-full h-48 object-cover rounded-lg"
+                    />
                 </div>
 
-                <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground line-clamp-2">
+                {/* Header with title and external link */}
+                <div className="flex items-start justify-between">
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <h3 className="font-semibold text-primary truncate flex-1 mr-2">
+                                    {project.title}
+                                </h3>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{project.title}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    
+                    <div className="flex items-center space-x-2 flex-shrink-0">
+                        {project.html_url && (
+                            <a
+                                href={project.html_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-muted-foreground hover:text-primary transition-colors"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <HiExternalLink className="w-5 h-5" />
+                            </a>
+                        )}
+                        {project.demo && (
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    window.open(project.demo, "_blank");
+                                }}
+                                className="text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                <HiExternalLink className="w-5 h-5" />
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Description and Topics */}
+                <div className="space-y-3">
+                    <p className="text-sm text-muted-foreground line-clamp-3">
                         {project.description || "No description provided"}
                     </p>
 
@@ -148,91 +178,29 @@ const ProjectCard = ({ project }) => {
                         </div>
                     )}
                 </div>
-
-                <div className="flex flex-col space-y-2">
-                    <div className="flex items-center space-x-4">
-                        {project.language && (
-                            <div className="flex items-center space-x-1">
-                                <div
-                                    className="w-3 h-3 rounded-full"
-                                    style={{
-                                        backgroundColor: languageColors[project.language] || '#ccc'
-                                    }}
-                                />
-                                <span className="text-sm text-muted-foreground">
-                                    {project.language}
-                                </span>
-                            </div>
-                        )}
-                        <div className="flex items-center space-x-1">
-                            <FaStar className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-sm text-muted-foreground">
-                                {project.stargazers_count}
-                            </span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                            <FaCodeBranch className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-sm text-muted-foreground">
-                                {project.forks_count}
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </motion.a>
+        </motion.div>
     );
 };
 
 const GithubProjects = () => {
-    const [page, setPage] = React.useState(1);
-    const [isLoadingMore, setIsLoadingMore] = React.useState(false);
 
-    const { data, error, isLoading, mutate: revalidateData } = useSWR(
-        `${GITHUB_API_URL}?sort=updated&per_page=${ITEMS_PER_PAGE * page}`,
-        fetcher,
-        {
-            revalidateOnFocus: false,
-            refreshInterval: 300000,
-            shouldRetryOnError: false,
-        }
-    );
-
-    const projects = React.useMemo(() => {
-        if (!data) return [];
-        return data
-            .filter(project => !project.fork)
-            .sort((a, b) => b.stargazers_count - a.stargazers_count)
-            .slice(0, ITEMS_PER_PAGE * page);
-    }, [data, page]);
-
-    const handleRetry = async () => {
-        try {
-            setIsLoadingMore(true);
-            await revalidateData();
-        } catch (err) {
-            console.error('Error retrying fetch:', err);
-        } finally {
-            setIsLoadingMore(false);
-        }
-    };
-
-    const loadMore = () => {
-        setPage(prev => prev + 1);
-    };
+    // Use projects from config.js
+    const projects = config.projects || [];
 
     return (
         <section className="py-20 relative">
             <div className="container mx-auto px-6">
                 <div className="space-y-16">
                     <div className="space-y-4 text-center">
-                        <motion.div
+                        {/* <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="inline-flex items-center space-x-2 bg-secondary/10 border-[1.8px] border-zinc-900/70 px-4 py-2 rounded-full text-primary backdrop-blur-sm"
                         >
                             <FaGithub className="w-5 h-5" />
-                            <span className="text-sm font-medium">Latest Github Projects</span>
-                        </motion.div>
+                            <span className="text-sm font-medium">Our Latest Projects</span>
+                        </motion.div> */}
 
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
@@ -240,7 +208,7 @@ const GithubProjects = () => {
                             transition={{ delay: 0.1 }}
                             className="text-3xl md:text-4xl font-bold text-primary"
                         >
-                            Open Source Projects
+                            Our Latest Projects
                         </motion.h2>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -248,7 +216,7 @@ const GithubProjects = () => {
                             transition={{ delay: 0.2 }}
                             className="text-lg text-muted-foreground"
                         >
-                            Check out some of my latest open source projects on Github
+                            Check out some of our recent work. <br /> We take pride in delivering high-quality projects that meet our client&apos;s needs and exceed their expectations.
                         </motion.p>
                     </div>
 
@@ -258,38 +226,12 @@ const GithubProjects = () => {
                         animate="show"
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                     >
-                        {isLoading ? (
-                            Array(ITEMS_PER_PAGE).fill(0).map((_, index) => (
-                                <ProjectSkeleton key={index} />
-                            ))
-                        ) : error ? (
-                            <ErrorAlert error={error} onRetry={handleRetry} />
-                        ) : (
-                            projects.map((project) => (
-                                <ProjectCard key={project.id} project={project} />
-                            ))
-                        )}
+                        {projects.map((project) => (
+                            <ProjectCard key={project.id} project={project} />
+                        ))}
                     </motion.div>
 
-                    <div className="flex justify-center space-x-4">
-                        {!error && data?.length > projects.length && (
-                            <Button
-                                variant="outline"
-                                onClick={loadMore}
-                                disabled={isLoadingMore}
-                                className="rounded-full px-6 py-6 text-base"
-                            >
-                                {isLoadingMore ? (
-                                    <>
-                                        <FaSpinner className="w-4 h-4 mr-2 animate-spin" />
-                                        Loading...
-                                    </>
-                                ) : (
-                                    'Load More Projects'
-                                )}
-                            </Button>
-                        )}
-
+                    {/* <div className="flex justify-center space-x-4">
                         <Button
                             variant="expandIcon"
                             Icon={FaGithub}
@@ -298,14 +240,14 @@ const GithubProjects = () => {
                             asChild
                         >
                             <a
-                                href={`https://github.com/${config.social.github}`}
+                                href="https://github.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 View More on Github
                             </a>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

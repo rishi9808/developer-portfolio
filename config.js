@@ -1,45 +1,47 @@
-import { FaDiscord, FaGithub, FaMapPin } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaInstagram, FaLinkedinIn, FaMapPin } from "react-icons/fa";
 import { HiCode, HiCube, HiDatabase, HiMail } from "react-icons/hi";
 
 export const config = {
     developer: {
-        name: "Fr3zy",
+        name: "The Designs Vault",
     },
     social: {
-        github: "Fr3zyy",
-        discord: "1155137511954337887"
+        github: null,
+        discord: null,
     },
     NAV_ITEMS: [
         { href: '/projects', label: 'Projects' },
         { href: '/contact', label: 'Contact' }
     ],
-    recentTracks: true, // Enable/disable Spotify recent tracks
+    recentTracks: false, // Enable/disable Spotify recent tracks
     projects: [
         {
             id: 1,
-            title: "Personal Portfolio Website",
-            description: "A modern and responsive portfolio website to showcase my projects, skills, and experiences. Built with Next.js and styled using TailwindCSS, this site provides a seamless user experience and a clean design that adapts to all devices.",
-            image: "/projects/portfolio-app.png",
-            technologies: ["Next.js", "TailwindCSS", "Framer Motion", "Vercel"],
-            github: "https://github.com/fr3zyy/portfolio-website",
-            demo: "https://fr3zy.vercel.app"
+            title: "Viya Shop: A Luxury Women's Fashion Store ",
+            description: "A modern and responsive e-commerce website for luxury women's fashion, featuring a sleek design and user-friendly interface.",
+            image: "/projects/viya.png",
+            demo: "https://viya.shop"
         },
         {
             id: 2,
-            title: "Code Share Website",
-            description: "A platform that allows users to share and review their code and profiles.",
-            image: "/projects/code-share-app.png",
-            technologies: ["Next.js", "MongoDB", "Express"],
-            demo: "https://nirvania.xyz"
+            title: "House of Trendz: Fashion & Lifestyle Store",
+            description: "A modern and stylish e-commerce platform for fashion and lifestyle products, offering a seamless shopping experience.",
+            image: "/projects/houseoftrendz.png",
+            demo: "https://shophouseoftrendz.com"
         },
         {
             id: 3,
-            title: "Wytra Bot",
-            description: "Enhance your server, simplify moderation, and boost engagement with a versatile Discord bot equipped with customizable commands and powerful features.",
-            image: "/projects/wytra-bot-app.png",
-            technologies: ["React", "Discord.js", "Node.js", "MongoDB"],
-            github: "https://github.com",
-            demo: "https://wytra.fun"
+            title: "FlowMatrix",
+            description: "A  landing page for FlowMatrix, showcasing their products and services.",
+            image: "/projects/flowmatrix.png",
+            demo: "https://flowmatrix.ae"
+        },
+        {
+            id: 4,
+            title: "The KettleFolks",
+            description: "A beautifully designed landing page for The KettleFolks, featuring their products and services.",
+            image: "/projects/kettlefolks.png",
+            demo: "https://kettlefolks.com"
         }
     ],
     skills: [
@@ -85,28 +87,28 @@ export const config = {
     ],
     contactInfo: [
         {
-            icon: <FaDiscord className="w-5 h-5" />,
-            label: "Discord",
-            value: "fr3zy",
-            link: `https://discord.com/users/1155137511954337887`
+            icon: <FaLinkedinIn className="w-5 h-5" />,
+            label: "LinkedIn",
+            value: "The Designs Vault",
+            link: `https://www.linkedin.com/company/the-designs-vault-uae`
         },
         {
-            icon: <FaGithub className="w-5 h-5" />,
-            label: "GitHub",
-            value: "@fr3zy",
-            link: `https://github.com/fr3zyy`
+            icon: <FaInstagram className="w-5 h-5" />,
+            label: "Instagram",
+            value: "@thedesignsvaultuae",
+            link: `https://www.instagram.com/thedesignsvaultuae`
         },
         {
             icon: <HiMail className="w-5 h-5" />,
             label: "Email",
-            value: "fr3zy@example.com",
-            link: "mailto:fr3zy@example.com"
+            value: "hello@thedesignsvault.com",
+            link: "mailto:hello@thedesignsvault.com"
         },
         {
             icon: <FaMapPin className="w-5 h-5" />,
             label: "Location",
-            value: "Turkey",
-            link: null
+            value: "UAE",
+            link: "https://g.co/kgs/eayxmTJ"
         }
     ]
 }
