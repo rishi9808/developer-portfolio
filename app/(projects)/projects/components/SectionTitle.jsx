@@ -46,7 +46,7 @@ const SectionTitle = () => (
                 </Button>
             </div> */}
         </div>
-
+{/* 
         <div className="flex items-center gap-6 pt-2 overflow-x-auto pb-2 scrollbar-hide">
             <div className="space-y-1 flex-shrink-0">
                 <span className="text-xl sm:text-2xl font-bold text-primary">10+</span>
@@ -61,7 +61,7 @@ const SectionTitle = () => (
                     Years Experience
                 </p>
             </div>
-        </div>
+        </div> */}
 
         <div className="h-px w-full bg-gradient-to-r from-primary/5 via-primary/20 to-primary/5" />
     </motion.div>

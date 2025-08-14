@@ -76,12 +76,11 @@ const HeroSection = () => {
               >
                 Hi, We're {config.developer.name} Team
               </motion.span>
-              <motion.span
+              {/* <motion.span
                 variants={textAnimation}
                 className="block text-white/60 text-2xl md:text-4xl"
               >
-                I build things for the web
-              </motion.span>
+              </motion.span> */}
             </motion.h1>
           </div>
 
@@ -89,8 +88,7 @@ const HeroSection = () => {
             variants={itemAnimation}
             className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto"
           >
-            I'm a full-stack developer specializing in building exceptional digital experiences.
-            Currently, I'm focused on building accessible, human-centered products.
+            We are a team of passionate developers and designers, dedicated to creating innovative solutions that make a difference. From web development to UI/UX design, we bring your ideas to life with precision and creativity.
           </motion.p>
 
           <motion.div

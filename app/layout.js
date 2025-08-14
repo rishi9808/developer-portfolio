@@ -20,6 +20,22 @@ export const metadata = {
   keywords: "fullstack developer,backend developer, frontend developer, web development, JavaScript,JS,Shopify, WordPress, React, Node.js, portfolio",
   author: "The Designs Vault",
   robots: "index, follow",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png"
+  },
+  openGraph: {
+    images: [{
+      url: "/logo.png",
+      width: 800,
+      height: 800,
+      alt: "The Designs Vault Logo"
+    }]
+  },
+  twitter: {
+    card: "summary",
+    images: "/logo.png"
+  }
 };
 
 export default function RootLayout({ children }) {
